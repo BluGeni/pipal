@@ -6,6 +6,7 @@ import lights
 
 KEY = "c75d167e83b5193c"
 LOCATION = "pws:KFLJACKS18"
+DEFAULT_COLOR = lights.color["GREEN"]
 
 COLOR = {
 	"Rain": lights.color["BLUE"],
@@ -24,11 +25,12 @@ def searchDict(dict, lookup):
 	for key, value in dict.items():
 		if key in lookup:
 			return value
+	return DEFAULT_COLOR
 
 def getWeather(loc=LOCATION):
 	url = "http://api.wunderground.com/api/" + KEY + "/geolookup/conditions/q/" + loc + ".json"
 	with urllib.request.urlopen(url) as response:
-		json_string = response.read()
+		json_string = response.read().decode('utf-8')
 		parsed_json = json.loads(json_string)
 		response.close()
 	return parsed_json

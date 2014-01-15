@@ -40,9 +40,9 @@ def getTOD():
 	hour = updateTime().hour
 	if 5 <= hour <= 11:
 		return "morning"
-	elif 12 <= hour <= 5:
+	elif 12 <= hour <= 17:
 		return "afternoon"
-	elif 6 <= hour <= 8:
+	elif 18 <= hour <= 20:
 		return "evening"
 	else:
 		return "night"
@@ -51,9 +51,9 @@ def getComment():
 	hour = updateTime().hour
 	if 5 <= hour <= 11:
 		return MORNING_COMMENTS[random.randint(0, len(MORNING_COMMENTS)-1)]
-	elif 12 <= hour <= 5:
+	elif 12 <= hour <= 17:
 		return EVENING_COMMENTS[random.randint(0, len(AFTERNOON_COMMENTS)-1)]
-	elif 6 <= hour <= 8:
+	elif 18 <= hour <= 20:
 		return AFTERNOON_COMMENTS[random.randint(0, len(EVENING_COMMENTS)-1)]
 	else:
 		return NIGHT_COMMENTS[random.randint(0, len(NIGHT_COMMENTS)-1)]

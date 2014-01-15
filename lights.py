@@ -95,7 +95,7 @@ def blink(colors=[color["BLACK"], color["WHITE"]],speed=.2,times=-1):
 				for color in colors:
 					setColor(color)
 					time.sleep(speed)
-		catch KeyboardInterrupt:
+		except KeyboardInterrupt:
 			return
 	else:
 		for x in range(times):
