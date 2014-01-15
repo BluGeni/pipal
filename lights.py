@@ -3,6 +3,9 @@
 import time
 import random
 import os
+import config
+
+cfg = config.getConfig("pipal.cfg")
 
 color = {
 	"BLACK": [0, 0, 0],
@@ -26,8 +29,17 @@ color = {
 	"DEEPPINK": [255, 20, 147]
 }
 
-PORTS = [7, 9, 11]
-current_color = color["BLACK"]
+PORTS = [int(cfg["LED_PORT_1"]), int(cfg["LED_PORT_2"]), int(cfg["LED_PORT_3"])]
+DEFAULT_COLOR = str(cfg["DEFAULT_COLOR"])
+
+def makeSet(color):
+	if type(color) is str:
+		return [int(color[1:3],16), int(color[3:5],16), int(color[5:7],16)]
+	elif type(color) is list:
+		return color
+		
+current_color = makeSet(DEFAULT_COLOR)
+
 
 def pwm(pin, angle):
 	cmd = "echo " + str(pin) + "=" + str(angle/256) + " > /dev/pi-blaster"
@@ -38,21 +50,16 @@ def makeHex(color):
 		return "#" + format(color[0],'x').zfill(2) + format(color[1],'x').zfill(2) + format(color[2],'x').zfill(2)
 	elif type(color) is str:
 		return color
-
-def makeSet(color):
-	if type(color) is str:
-		return [int(hex[1:3],16), int(hex[3:5],16), int(hex[5:7],16)]
-	elif type(color) is list:
-		return color
-
+		
 def getCurrentHex():
 	return makeHex(current_color)
 			
 def getCurrentColor():
 	global color
+	global current_color
 	for key, value in color.items():
-		if current_color is value:
-			return key
+			if current_color == value:
+				return key
 	return getCurrentHex()
 
 def setColor(hex):

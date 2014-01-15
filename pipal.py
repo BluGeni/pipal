@@ -6,11 +6,14 @@ import lights
 import face
 import speech
 from RPi import GPIO
+import config
 
 print("PiPal by Aaron Lehrian\n\n")
 
-SENSOR_PORT = 23
-NAME = "Aaron"
+cfg = config.getConfig("pipal.cfg")
+
+SENSOR_PORT = cfg["SENSOR_PORT"]
+NAME = cfg["NAME"]
 
 def greetText(time_of_day, weather_conditions):
 	return "Good " + time_of_day + " " + NAME + ". The current weather conditions are " + weather_conditions + ". " + tod.getComment()

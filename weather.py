@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 
-import urllib
+import urllib.request
 import json
 import lights
+import config
 
-KEY = "c75d167e83b5193c"
-LOCATION = "pws:KFLJACKS18"
-DEFAULT_COLOR = lights.color["GREEN"]
+cfg = config.getConfig("pipal.cfg")
+
+UNKNOWN_WEATHER_COLOR = cfg["UNKNOWN_WEATHER_COLOR"]
+KEY = cfg["KEY"]
+LOCATION = cfg["LOCATION"]
 
 COLOR = {
 	"Rain": lights.color["BLUE"],
@@ -25,7 +28,7 @@ def searchDict(dict, lookup):
 	for key, value in dict.items():
 		if key in lookup:
 			return value
-	return DEFAULT_COLOR
+	return UNKNOWN_WEATHER_COLOR
 
 def getWeather(loc=LOCATION):
 	url = "http://api.wunderground.com/api/" + KEY + "/geolookup/conditions/q/" + loc + ".json"

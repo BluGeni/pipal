@@ -3,8 +3,11 @@
 import urllib.request
 from pydub import AudioSegment
 import os
+import config
 
-PATH = "C:/Users/Aaron/Desktop/pipal/"
+cfg = config.getConfig("pipal.cfg")
+
+TEMP_PATH = cfg["TEMP_PATH"] 
 
 def parseText(text):
 	text_list = []
@@ -21,7 +24,7 @@ def getMp3(text_list):
 	file_list = []
 	x = 0
 	for line in text_list:
-		file_list.append(PATH + "line" + str(x) + ".mp3")
+		file_list.append(TEMP_PATH + "line" + str(x) + ".mp3")
 		url = "http://translate.google.com/translate_tts?tl=en&q=" + line
 		request = urllib.request.Request(url,None,headers)
 		with urllib.request.urlopen(request) as response, open(file_list[x], 'wb') as out_file:
