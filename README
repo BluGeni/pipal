@@ -1,0 +1,5 @@
+PiPal-0.1 by Aaron Lehrian
+
+Gives you a "personal assistant" that detects you, tells you the weather, greets you, and controls a strip of RGB LEDs.
+
+Currently working on facial recognition
