@@ -1,9 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import weather
 import tod
 import lights
-import face
+#import face
 import speech
 from RPi import GPIO
 import config
@@ -12,7 +12,7 @@ print("PiPal by Aaron Lehrian\n\n")
 
 cfg = config.getConfig("pipal.cfg")
 
-SENSOR_PORT = cfg["SENSOR_PORT"]
+SENSOR_PORT = int(cfg["SENSOR_PORT"])
 NAME = cfg["NAME"]
 
 def greetText(time_of_day, weather_conditions):
@@ -20,7 +20,8 @@ def greetText(time_of_day, weather_conditions):
 	
 def printLED():
 	print("LED color: " + lights.getCurrentColor() + "\n\n")
-
+	
+	
 def mainLoop():
 	GPIO.setmode(GPIO.BOARD)
 	GPIO.setup(SENSOR_PORT, GPIO.IN)
@@ -33,11 +34,11 @@ def mainLoop():
 			if GPIO.input(SENSOR_PORT):
 				if tod.checkTimer():
 					time_of_day = tod.getTOD()
-					weather_conditions = weather.getWeather()["current_observation"]["weather"]
-					greet_text = greetText(time_of_day, weather_conditions)
+					weather_conditions = weather.getWeather()
+					greet_text = greetText(time_of_day, weather_conditions["current_observation"]["weather"])
 					print(greet_text + "\n")
 					speech.playText(greet_text)
-					fade(weather.getColor(weather_conditions))
+					lights.fade(weather.getColor(weather_conditions))
 					printLED()
 				tod.setTimer(10)
 	except KeyboardInterrupt:

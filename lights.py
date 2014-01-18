@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import time
 import random
@@ -29,7 +29,7 @@ color = {
 	"DEEPPINK": [255, 20, 147]
 }
 
-PORTS = [int(cfg["LED_PORT_1"]), int(cfg["LED_PORT_2"]), int(cfg["LED_PORT_3"])]
+PORTS = [int(cfg['LED_PORT_1']), int(cfg["LED_PORT_2"]), int(cfg["LED_PORT_3"])]
 DEFAULT_COLOR = str(cfg["DEFAULT_COLOR"])
 
 def makeSet(color):
@@ -91,7 +91,7 @@ def fade(color2, speed=5, steps=500, color1=-1):
 	color_step = [(color2[0]-color1[0])/steps, (color2[1]-color1[1])/steps, (color2[2]-color1[2])/steps]
 	
 	for x in range(steps):
-		color1 = color1 + color_step
+		color1 = [a + b for a, b in zip(color1, color_step)]
 		setColor(color1)
 		time.sleep(sleep_time)
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import urllib.request
 import json
@@ -7,9 +7,9 @@ import config
 
 cfg = config.getConfig("pipal.cfg")
 
-UNKNOWN_WEATHER_COLOR = cfg["UNKNOWN_WEATHER_COLOR"]
-KEY = cfg["KEY"]
-LOCATION = cfg["LOCATION"]
+UNKNOWN_WEATHER_COLOR = str(cfg["UNKNOWN_WEATHER_COLOR"])
+KEY = str(cfg["KEY"])
+LOCATION = str(cfg["LOCATION"])
 
 COLOR = {
 	"Rain": lights.color["BLUE"],

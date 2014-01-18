@@ -1,5 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
+import urllib.parse
 import urllib.request
 from pydub import AudioSegment
 import os
@@ -7,13 +8,14 @@ import config
 
 cfg = config.getConfig("pipal.cfg")
 
-TEMP_PATH = cfg["TEMP_PATH"] 
+TEMP_PATH = str(cfg["TEMP_PATH"])
 
 def parseText(text):
 	text_list = []
 	while len(text) > 100:
-		text_list.append(text[0:100])
-		text = text[100:]
+		x = text[:100].rfind(' ')
+		text_list.append(text[:x])
+		text = text[x:]
 		
 	text_list.append(text)
 	return text_list
@@ -25,7 +27,7 @@ def getMp3(text_list):
 	x = 0
 	for line in text_list:
 		file_list.append(TEMP_PATH + "line" + str(x) + ".mp3")
-		url = "http://translate.google.com/translate_tts?tl=en&q=" + line
+		url = "http://translate.google.com/translate_tts?tl=en&q=" + urllib.parse.quote(line)
 		request = urllib.request.Request(url,None,headers)
 		with urllib.request.urlopen(request) as response, open(file_list[x], 'wb') as out_file:
 			data = response.read()
@@ -38,10 +40,10 @@ def getMp3(text_list):
 def combineMp3(file_list, out_file="speech.mp3"):
 	mp3_list = []
 	for file in file_list:
-		print(file)
 		mp3_list.append(AudioSegment.from_mp3(file))
-	
-	speech = reduce(lambda a, b: a + b, mp3_list)
+	speech = mp3_list[0]
+	for mp3 in mp3_list[1:]:
+		speech = speech + mp3
 	speech.export(out_file, format="mp3")
 	return speech
 	
