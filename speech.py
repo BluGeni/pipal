@@ -52,7 +52,7 @@ def playText(text):
 	file_list = getMp3(text_list)
 	combineMp3(file_list, "speech.mp3")
 
-	os.system("mpg123 -q speech.mp3")
+	os.system("afplay speech.mp3")
 	
 	for file in file_list:
 		os.remove(file)

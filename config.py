@@ -16,7 +16,7 @@ LED_PORT_2 = 17
 LED_PORT_3 = 22"""
 
 def createConfig():
-	dir = "/home/" + os.getenv("SUDO_USER") + "/.pipal"
+	dir = "."
 	if not os.path.exists(dir):
 		os.makedirs(dir)
 	config_file = dir + "/pipal.cfg"
@@ -26,7 +26,6 @@ def createConfig():
 	
 
 def getConfig(file):
-	file = "/home/" + os.getenv("SUDO_USER") + "/.pipal/" + file
 	try:
 		with open(file):
 			config = configparser.ConfigParser()

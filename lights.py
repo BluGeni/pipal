@@ -39,15 +39,17 @@ def makeSet(color):
 		return color
 		
 current_color = makeSet(DEFAULT_COLOR)
+print(current_color)
 
 
 def pwm(pin, angle):
-	cmd = "echo " + str(pin) + "=" + str(angle/256) + " > /dev/pi-blaster"
-	os.system(cmd)
+#	cmd = "echo " + str(pin) + "=" + str(angle/256) + " > /dev/pi-blaster"
+#	os.system(cmd)
+    pass
 	
 def makeHex(color):
 	if type(color) is list:
-		return "#" + format(color[0],'x').zfill(2) + format(color[1],'x').zfill(2) + format(color[2],'x').zfill(2)
+		return "#" + format(int(round(color[0])),'x').zfill(2) + format(int(round(color[1])),'x').zfill(2) + format(int(round(color[2])),'x').zfill(2)
 	elif type(color) is str:
 		return color
 		

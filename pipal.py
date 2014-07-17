@@ -5,14 +5,15 @@ import tod
 import lights
 #import face
 import speech
-from RPi import GPIO
+#from RPi import GPIO
 import config
+#import curses
 
 print("PiPal by Aaron Lehrian\n\n")
 
 cfg = config.getConfig("pipal.cfg")
 
-SENSOR_PORT = int(cfg["SENSOR_PORT"])
+#SENSOR_PORT = int(cfg["SENSOR_PORT"])
 NAME = cfg["NAME"]
 
 def greetText(time_of_day, weather_conditions):
@@ -23,15 +24,15 @@ def printLED():
 	
 	
 def mainLoop():
-	GPIO.setmode(GPIO.BOARD)
-	GPIO.setup(SENSOR_PORT, GPIO.IN)
+#	GPIO.setmode(GPIO.BOARD)
+#	GPIO.setup(SENSOR_PORT, GPIO.IN)
 
 	lights.setRandom()
 	printLED()
 
 	try:
 		while True:
-			if GPIO.input(SENSOR_PORT):
+			if input(''):
 				if tod.checkTimer():
 					time_of_day = tod.getTOD()
 					weather_conditions = weather.getWeather()
@@ -42,5 +43,5 @@ def mainLoop():
 					printLED()
 				tod.setTimer(10)
 	except KeyboardInterrupt:
-		GPIO.cleanup()
-
+		pass
+mainLoop()
